@@ -1,3 +1,4 @@
+import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -11,9 +12,10 @@ const routes: Routes = [
   { path: 'roomlist', component: RoomlistComponent },
   { path: 'addroom', component: AddroomComponent },
   { path: 'chatroom/:roomname', component: ChatroomComponent },
-  { path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
+  {
+    path: '', component: AppComponent
+    // redirectTo: '/login',
+    // pathMatch: 'full'
   }
 ];
 

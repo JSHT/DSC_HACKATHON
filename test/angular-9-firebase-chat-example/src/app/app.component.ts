@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import * as firebase from 'firebase';
+import { DatePipe } from '@angular/common';
 
 const config = {
   apiKey: 'jYNA5xUBOyCZUoXoQYyxgtRESXHtoX6ImimUo5UW',
@@ -13,8 +15,11 @@ const config = {
 })
 export class AppComponent {
   title = 'angular-chat';
+  a = new Date();
+
 
   constructor() {
     firebase.initializeApp(config);
   }
+
 }

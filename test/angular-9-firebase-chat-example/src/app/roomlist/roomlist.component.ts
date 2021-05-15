@@ -7,13 +7,15 @@ export const snapshotToArray = (snapshot: any) => {
   const returnArr = [];
 
   snapshot.forEach((childSnapshot: any) => {
-      const item = childSnapshot.val();
-      item.key = childSnapshot.key;
-      returnArr.push(item);
+    const item = childSnapshot.val();
+    item.key = childSnapshot.key;
+    returnArr.push(item);
+    // console.log(item.roomname);
   });
 
   return returnArr;
 };
+
 
 @Component({
   selector: 'app-roomlist',
@@ -26,6 +28,7 @@ export class RoomlistComponent implements OnInit {
   displayedColumns: string[] = ['roomname'];
   rooms = [];
   isLoadingResults = true;
+  static loginTime: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public datepipe: DatePipe) {
     this.nickname = localStorage.getItem('nickname');
@@ -49,13 +52,21 @@ export class RoomlistComponent implements OnInit {
     const newMessage = firebase.database().ref('chats/').push();
     newMessage.set(chat);
 
+    // implement enter room time
+    const entryTime = { roomname: '', nickname: '', date: '' };
+    entryTime.roomname = roomname;
+    entryTime.nickname = this.nickname;
+    entryTime.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
+    const newEntry = firebase.database().ref('entrys/').push();
+    newEntry.set(entryTime);
+
     firebase.database().ref('roomusers/').orderByChild('roomname').equalTo(roomname).on('value', (resp: any) => {
       let roomuser = [];
       roomuser = snapshotToArray(resp);
       const user = roomuser.find(x => x.nickname === this.nickname);
       if (user !== undefined) {
         const userRef = firebase.database().ref('roomusers/' + user.key);
-        userRef.update({status: 'online'});
+        userRef.update({ status: 'online' });
       } else {
         const newroomuser = { roomname: '', nickname: '', status: '' };
         newroomuser.roomname = roomname;
