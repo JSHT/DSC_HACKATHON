@@ -1,0 +1,38 @@
+/* Structure */
+.example-container {
+  position: relative;
+  padding: 5px;
+}
+
+.container {
+  align-items: center;
+}
+
+.example-form {
+  margin: 0 auto;
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.example-full-width:nth-last-child(0) {
+  margin-bottom: 10px;
+}
+
+.button-row {
+  margin: 10px 0;
+}
+
+.mat-flat-button {
+  margin: 5px;
+}
+
+.btn{
+  padding-bottom: 0;
+  padding-left: 50px;
+  padding-right: 50px;
+}
