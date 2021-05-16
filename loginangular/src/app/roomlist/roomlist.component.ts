@@ -31,7 +31,7 @@ export class RoomlistComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, public datepipe: DatePipe) {
     this.nickname = localStorage.getItem('nickname');
-    firebase.database().ref('rooms/').on('value', resp => {
+    firebase.default.database().ref('rooms/').on('value', resp => {
       this.rooms = [];
       this.rooms = snapshotToArray(resp);
       this.isLoadingResults = false;
@@ -50,7 +50,7 @@ export class RoomlistComponent implements OnInit {
     chat.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
     chat.message = `${this.nickname} enter the room`;
     chat.type = 'join';
-    const newMessage = firebase.database().ref('chats/').push();
+    const newMessage = firebase.default.database().ref('chats/').push();
     newMessage.set(chat);
 
     // implement enter room time
@@ -58,22 +58,22 @@ export class RoomlistComponent implements OnInit {
     entryTime.roomname = roomname;
     entryTime.nickname = this.nickname;
     entryTime.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
-    const newEntry = firebase.database().ref('entrys/').push();
+    const newEntry = firebase.default.database().ref('entrys/').push();
     newEntry.set(entryTime);
-    var presenceRef = firebase.database().ref('entrys/' + newEntry.key);
+    var presenceRef = firebase.default.database().ref('entrys/' + newEntry.key);
     // Write a string when this client loses connection
     presenceRef.onDisconnect().remove();
 
 
-    firebase.database().ref('roomusers/').orderByChild('roomname').equalTo(roomname).once('value', (resp: any) => {
+    firebase.default.database().ref('roomusers/').orderByChild('roomname').equalTo(roomname).once('value', (resp: any) => {
       let roomuser = [];
       roomuser = snapshotToArray(resp);
       const user = roomuser.find(x => x.nickname === this.nickname);
       if (user !== undefined) {
-        const userRef = firebase.database().ref('roomusers/' + user.key);
+        const userRef = firebase.default.database().ref('roomusers/' + user.key);
         userRef.update({ status: 'online' });
         console.log("in");
-        var presenceRef = firebase.database().ref('roomusers/' + user.key);
+        var presenceRef = firebase.default.database().ref('roomusers/' + user.key);
         // Write a string when this client loses connection
 
         presenceRef.onDisconnect().update({ status: 'offline' });
@@ -82,9 +82,9 @@ export class RoomlistComponent implements OnInit {
         newroomuser.roomname = roomname;
         newroomuser.nickname = this.nickname;
         newroomuser.status = 'online';
-        const newRoomUser = firebase.database().ref('roomusers/').push();
+        const newRoomUser = firebase.default.database().ref('roomusers/').push();
         newRoomUser.set(newroomuser);
-        var presenceRef = firebase.database().ref('roomusers/' + newRoomUser.key);
+        var presenceRef = firebase.default.database().ref('roomusers/' + newRoomUser.key);
         presenceRef.onDisconnect().update({ status: "offline" });
       }
     });

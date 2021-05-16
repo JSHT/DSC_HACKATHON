@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   nickname = '';
-  ref = firebase.database().ref('users/');
+  ref = firebase.default.database().ref('users/');
   matcher = new MyErrorStateMatcher();
 
   constructor(private router: Router, private formBuilder: FormBuilder) { }
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/roomlist']);
     }
     this.loginForm = this.formBuilder.group({
-      'nickname' : [null, Validators.required]
+      'nickname': [null, Validators.required]
     });
   }
 
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('nickname', login.nickname);
         this.router.navigate(['/roomlist']);
       } else {
-        const newUser = firebase.database().ref('users/').push();
+        const newUser = firebase.default.database().ref('users/').push();
         newUser.set(login);
         localStorage.setItem('nickname', login.nickname);
         this.router.navigate(['/roomlist']);

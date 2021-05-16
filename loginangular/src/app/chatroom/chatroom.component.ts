@@ -22,7 +22,7 @@ export const snapshotToArray2 = (snapshot: any, name: any) => {
     var userRef;
     var userEn;
     var user;
-    firebase.database().ref('entrys/').orderByChild('nickname').equalTo(name).on('value', (resp: any) => {
+    firebase.default.database().ref('entrys/').orderByChild('nickname').equalTo(name).on('value', (resp: any) => {
       let roomuser = [];
       roomuser = snapshotToArray(resp);
       user = roomuser.find(x => x.nickname === name);
@@ -90,14 +90,14 @@ export class ChatroomComponent implements OnInit {
 
 
 
-    firebase.database().ref('chats/').on('value', resp => {
+    firebase.default.database().ref('chats/').on('value', resp => {
       console.log("resp");
       console.log(resp);
       this.chats = [];
       this.chats = snapshotToArray2(resp, this.nickname);
       setTimeout(() => this.scrolltop = this.chatcontent.nativeElement.scrollHeight, 500);
     });
-    firebase.database().ref('roomusers/').orderByChild('roomname').equalTo(this.roomname).on('value', (resp2: any) => {
+    firebase.default.database().ref('roomusers/').orderByChild('roomname').equalTo(this.roomname).on('value', (resp2: any) => {
       console.log("resp2");
       console.log(resp2);
       const roomusers = snapshotToArray(resp2);
@@ -117,7 +117,7 @@ export class ChatroomComponent implements OnInit {
     chat.nickname = this.nickname;
     chat.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
     chat.type = 'message';
-    const newMessage = firebase.database().ref('chats/').push();
+    const newMessage = firebase.default.database().ref('chats/').push();
     newMessage.set(chat);
     this.chatForm = this.formBuilder.group({
       'message': [null, Validators.required]
@@ -131,26 +131,26 @@ export class ChatroomComponent implements OnInit {
     chat.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
     chat.message = `${this.nickname} leave the room`;
     chat.type = 'exit';
-    const newMessage = firebase.database().ref('chats/').push();
+    const newMessage = firebase.default.database().ref('chats/').push();
     newMessage.set(chat);
 
-    firebase.database().ref('roomusers/').orderByChild('roomname').equalTo(this.roomname).once('value', (resp: any) => {
+    firebase.default.database().ref('roomusers/').orderByChild('roomname').equalTo(this.roomname).once('value', (resp: any) => {
       let roomuser = [];
       roomuser = snapshotToArray(resp);
       const user = roomuser.find(x => x.nickname === this.nickname);
       if (user !== undefined) {
-        const userRef = firebase.database().ref('roomusers/' + user.key);
+        const userRef = firebase.default.database().ref('roomusers/' + user.key);
         userRef.update({ status: 'offline' });
       }
     });
 
     // 把進入紀錄刪掉
-    firebase.database().ref('entrys/').orderByChild('nickname').equalTo(this.nickname).once('value', (resp: any) => {
+    firebase.default.database().ref('entrys/').orderByChild('nickname').equalTo(this.nickname).once('value', (resp: any) => {
       let niUser = [];
       niUser = snapshotToArray(resp);
       var user = niUser.find(x => x.nickname === this.nickname);
       if (user !== undefined) {
-        const userRef = firebase.database().ref('entrys/' + user.key);
+        const userRef = firebase.default.database().ref('entrys/' + user.key);
         userRef.remove();
       }
     });
