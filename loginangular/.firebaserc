@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "loginfinal-438cf": {
+      "hosting": {
+        "loginangular": [
+          "loginfinal-438cf"
+        ]
+      }
+    }
+  }
+}
