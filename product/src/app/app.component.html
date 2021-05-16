@@ -1,0 +1,42 @@
+<main class="container">
+  <!-- Left Column / Headphones Image -->
+  <div class="left-column">
+    <br><br><br>
+    <h1>選擇圖片</h1>
+    <br>
+    <div class="productimg">
+      <img [src]="url" *ngIf="url">
+    </div>
+    <input type="file" (change)="upload($event)" accept="*.png.jpg" id="">
+    <br>
+    <!-- <button (click)="uploadImage()" class="cart-btn">Upload Image</button> -->
+    <br>
+    
+  </div>
+
+
+  <!-- Right Column -->
+  <div class="right-column">
+    <h1>輸入商品資訊</h1>
+
+    <!-- Product Description -->
+    <div class="product-description">
+      <input type=text [(ngModel)]=ProductName size=10 placeholder="商品名稱">
+      <br>
+      <textarea autosize [(ngModel)]=ProductDescription placeholder="商品敘述" ></textarea>
+    </div>
+
+
+
+    <!-- Product Pricing -->
+    <div class="product-price">
+      <input type=text [(ngModel)]=ProductPrice size=10 placeholder="價錢">
+    </div>
+    <button (click)="CreateRecord()" class="cart-btn">上傳商品</button>
+    <h4><b>{{message}}</b></h4>
+  </div>
+</main>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" charset="utf-8"></script>
+<script src="script.js" charset="utf-8"></script>
