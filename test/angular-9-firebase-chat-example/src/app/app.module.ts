@@ -1,21 +1,14 @@
-import { environment } from 'src/environments/environment';
-import { NavbarComponent } from './shared/navbar/navbar.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireModule } from '@angular/fire';
-
 import { LoginComponent } from './login/login.component';
 import { RoomlistComponent } from './roomlist/roomlist.component';
 import { AddroomComponent } from './addroom/addroom.component';
 import { ChatroomComponent } from './chatroom/chatroom.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -30,7 +23,6 @@ import { DatePipe } from '@angular/common';
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
     LoginComponent,
     RoomlistComponent,
     AddroomComponent,
@@ -39,9 +31,6 @@ import { DatePipe } from '@angular/common';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
